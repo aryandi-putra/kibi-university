@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.aryandi.university"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.aryandi.university"
