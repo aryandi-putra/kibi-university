@@ -74,4 +74,6 @@ dependencies {
     // coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    // viewmodel compose
+    implementation(libs.viewmodel.compose)
 }
