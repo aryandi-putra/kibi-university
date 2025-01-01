@@ -1,4 +1,4 @@
-package com.aryandi.university.data
+package com.aryandi.university.data.model
 
 sealed class ApiResult<T>(val data:T?=null, val error:String?=null){
     class Success<T>(quotes: T): ApiResult<T>(data = quotes)

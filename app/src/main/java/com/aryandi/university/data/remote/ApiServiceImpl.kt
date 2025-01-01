@@ -1,5 +1,6 @@
-package com.aryandi.university.data
+package com.aryandi.university.data.remote
 
+import com.aryandi.university.data.model.ApiResult
 import com.aryandi.university.data.model.University
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
