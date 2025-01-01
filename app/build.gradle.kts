@@ -71,4 +71,7 @@ dependencies {
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
+    // coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
