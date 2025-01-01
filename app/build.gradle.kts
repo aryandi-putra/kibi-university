@@ -61,10 +61,14 @@ dependencies {
     // dagger
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    //ktor
+    // ktor
     implementation(libs.ktor.core)
     implementation(libs.ktor.android)
     implementation(libs.ktor.content.negotiation)
     implementation(libs.ktor.json)
     implementation(libs.ktor.logging)
+    // room
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
 }

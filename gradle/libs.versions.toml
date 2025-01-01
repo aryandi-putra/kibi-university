@@ -11,6 +11,7 @@ composeBom = "2024.12.01"
 hilt = "2.51.1"
 ksp = "2.1.0-1.0.29"
 ktor = "3.0.3"
+room = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,9 @@ ktor-android = { group = "io.ktor", name = "ktor-client-android", version.ref = 
 ktor-content-negotiation = {group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor"}
 ktor-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler" , version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
