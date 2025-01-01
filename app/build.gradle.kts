@@ -58,6 +58,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    // dagger
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    //ktor
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.android)
+    implementation(libs.ktor.content.negotiation)
+    implementation(libs.ktor.json)
+    implementation(libs.ktor.logging)
 }
