@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class University(
-    var webPages: ArrayList<String> = arrayListOf(),
+    var webPages: List<String> = arrayListOf(),
     var name: String? = null
 )

@@ -66,8 +66,12 @@ dependencies {
     implementation(libs.ktor.core)
     implementation(libs.ktor.android)
     implementation(libs.ktor.content.negotiation)
-    implementation(libs.ktor.json)
+    implementation(libs.ktor.okhttp)
+    implementation(libs.ktor.gson)
     implementation(libs.ktor.logging)
+    //chucker
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
     // room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)

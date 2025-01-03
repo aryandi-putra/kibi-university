@@ -1,23 +1,27 @@
 package com.aryandi.university.di
 
+import android.content.Context
 import com.aryandi.university.data.remote.ApiService
 import com.aryandi.university.data.remote.ApiServiceImpl
 import com.aryandi.university.util.Util
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
-import io.ktor.client.engine.android.*
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.gson.gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
@@ -26,8 +30,27 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): HttpClient {
-        return HttpClient(Android) {
+    fun provideHttpClient(@ApplicationContext context: Context): HttpClient {
+        val chuckerCollector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
+
+        val chuckerInterceptor = ChuckerInterceptor.Builder(context)
+            .collector(chuckerCollector)
+            .maxContentLength(250000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(true)
+            .createShortcut(true)
+            .build()
+
+        val okhttpEngine = OkHttp.create {
+            addInterceptor(chuckerInterceptor)
+        }
+
+        return HttpClient(okhttpEngine) {
+            expectSuccess = true
             install(Logging) {
                 level = LogLevel.ALL
             }
@@ -36,7 +59,7 @@ object ApiModule {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
             install(ContentNegotiation) {
-                json(Json)
+                gson()
             }
         }
     }
