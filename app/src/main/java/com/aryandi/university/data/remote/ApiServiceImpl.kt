@@ -8,8 +8,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiService {
+class ApiServiceImpl @Inject constructor(private val httpClient: HttpClient) : ApiService {
     override fun getUniversities(): Flow<ApiResult<List<University>>> = flow {
         emit(ApiResult.Loading())
         try {

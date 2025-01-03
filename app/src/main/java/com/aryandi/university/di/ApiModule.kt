@@ -1,7 +1,9 @@
 package com.aryandi.university.di
 
+import com.aryandi.university.data.remote.ApiService
 import com.aryandi.university.data.remote.ApiServiceImpl
 import com.aryandi.university.util.Util
+import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -18,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
-@dagger.Module
+@Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
@@ -41,7 +43,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApiService(httpClient: HttpClient) = ApiServiceImpl(httpClient)
+    fun provideApiService(httpClient: HttpClient): ApiService = ApiServiceImpl(httpClient)
 
     @Provides
     fun provideDispatcher(): CoroutineDispatcher = Dispatchers.Default
