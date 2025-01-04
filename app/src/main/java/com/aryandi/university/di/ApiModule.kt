@@ -59,7 +59,10 @@ object ApiModule {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
             install(ContentNegotiation) {
-                gson()
+                gson {
+                    setPrettyPrinting()
+                    disableHtmlEscaping()
+                }
             }
         }
     }

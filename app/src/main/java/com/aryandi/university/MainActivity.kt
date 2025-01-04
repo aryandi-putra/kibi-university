@@ -41,7 +41,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -115,7 +114,7 @@ fun UniversityItem(university: University) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(text = university.name)
-//        Text(text = university.webPages)
+        Text(text = university.webPages[0])
         HorizontalDivider(modifier = Modifier.fillMaxWidth())
     }
 }
