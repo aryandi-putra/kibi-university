@@ -3,7 +3,7 @@ package com.aryandi.university.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aryandi.university.data.model.ApiResult
-import com.aryandi.university.data.model.University
+import com.aryandi.university.data.remote.NetworkUniversity
 import com.aryandi.university.data.remote.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +19,7 @@ class MainViewModel @Inject constructor(
     private val apiService: ApiService,
     private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _universities = MutableStateFlow<ApiResult<List<University>>>(ApiResult.Loading())
+    private val _universities = MutableStateFlow<ApiResult<List<NetworkUniversity>>>(ApiResult.Loading())
     val universities = _universities.asStateFlow()
 
     init {

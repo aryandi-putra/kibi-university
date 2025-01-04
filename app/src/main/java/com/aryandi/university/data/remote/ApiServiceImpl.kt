@@ -1,7 +1,6 @@
 package com.aryandi.university.data.remote
 
 import com.aryandi.university.data.model.ApiResult
-import com.aryandi.university.data.model.University
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ApiServiceImpl @Inject constructor(private val httpClient: HttpClient) : ApiService {
-    override fun getUniversities(): Flow<ApiResult<List<University>>> = flow {
+    override fun getUniversities(): Flow<ApiResult<List<NetworkUniversity>>> = flow {
         emit(ApiResult.Loading())
         try {
             emit(ApiResult.Success(httpClient.get("/search") {

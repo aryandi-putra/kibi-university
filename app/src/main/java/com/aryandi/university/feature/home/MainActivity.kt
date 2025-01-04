@@ -1,7 +1,6 @@
 package com.aryandi.university.feature.home
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -35,7 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.aryandi.university.data.model.ApiResult
-import com.aryandi.university.data.model.University
+import com.aryandi.university.data.remote.NetworkUniversity
 import com.aryandi.university.feature.detail.UniversityWebActivity
 import com.aryandi.university.ui.theme.UniversityTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -111,7 +110,7 @@ fun CustomAppBar() {
 }
 
 @Composable
-fun UniversityItem(university: University) {
+fun UniversityItem(university: NetworkUniversity) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
