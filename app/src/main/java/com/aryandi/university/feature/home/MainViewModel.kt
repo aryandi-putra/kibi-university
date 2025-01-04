@@ -1,4 +1,4 @@
-package com.aryandi.university.viewmodel
+package com.aryandi.university.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

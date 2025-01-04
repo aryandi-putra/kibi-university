@@ -3,4 +3,5 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">universities.hipolabs.com</domain>
     </domain-config>
+    <base-config cleartextTrafficPermitted="true"/>
 </network-security-config>
