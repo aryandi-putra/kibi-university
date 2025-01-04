@@ -16,9 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,27 +41,24 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val apiResult by viewModel.universities.collectAsState()
-            when (apiResult) {
-                is ApiResult.Loading -> {
-                }
-
-                is ApiResult.Error -> {
-                }
-
-                is ApiResult.Success -> {
-                }
-            }
             UniversityTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Scaffold(
+                    topBar = { CustomAppBar() },
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     Box(
-                        modifier = Modifier.fillMaxSize().padding(start = 4.dp, end = 4.dp),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .padding(start = 4.dp, end = 4.dp),
                         contentAlignment = Alignment.Center
                     ) {
+                        val apiResult by viewModel.universities.collectAsState()
                         when (apiResult) {
                             is ApiResult.Loading -> {
                                 CircularProgressIndicator(
@@ -92,11 +94,28 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomAppBar() {
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+        ),
+        title = {
+            Text("Indonesian University")
+        }
+    )
+}
+
 @Composable
 fun UniversityItem(university: University) {
-    Column(modifier = Modifier.fillMaxWidth(),
-        verticalArrangement =Arrangement.spacedBy(4.dp) ) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
         Text(text = university.name)
+//        Text(text = university.webPages)
         HorizontalDivider(modifier = Modifier.fillMaxWidth())
     }
 }
