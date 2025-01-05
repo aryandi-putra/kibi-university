@@ -16,6 +16,7 @@ class UniversityRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : UniversityRepository {
     override fun getUniversities(): Flow<DataResult<List<University>>> = flow {
+        emit(DataResult.Loading())
         val dbUniversities = universitiesDao.getDBUniversities()
         if (dbUniversities.isEmpty()) {
             val apiUniversities = apiService.getUniversities().data
@@ -36,6 +37,7 @@ class UniversityRepositoryImpl @Inject constructor(
 
     override fun getUniversitiesByKeyword(keyword: String):
             Flow<DataResult<List<University>>> = flow {
+        emit(DataResult.Loading())
         val dbUniversities = universitiesDao.getDBUniversitiesByKey(keyword)
         emit(DataResult.Success(dbUniversities.map {
             DBToModelMapper.map(it)

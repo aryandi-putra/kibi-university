@@ -81,4 +81,11 @@ dependencies {
     implementation(libs.coil.network.okhttp)
     // viewmodel compose
     implementation(libs.viewmodel.compose)
+    // mockk
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
+    // coroutine test
+    testImplementation(libs.coroutine.test)
+    // turbine
+    testImplementation(libs.turbine)
 }
