@@ -24,14 +24,38 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private val _universities = MutableStateFlow<DataResult<List<University>>>(DataResult.Loading())
     val universities = _universities.asStateFlow()
+    private val _searchText = MutableStateFlow("")
+    val searchText = _searchText.asStateFlow()
 
     init {
         fetchUniversities()
     }
 
+    fun onSearchTextChange(text: String) {
+        _searchText.value = text
+        if (text.isEmpty()) {
+            fetchUniversities()
+        } else {
+            getUniversitiesByKeyword(text)
+        }
+    }
+
     private fun fetchUniversities() {
         viewModelScope.launch {
             repository.getUniversities()
+                .flowOn(defaultDispatcher)
+                .catch {
+                    _universities.value = DataResult.Error(it.message ?: "Something went wrong")
+                }
+                .collect {
+                    _universities.value = it
+                }
+        }
+    }
+
+    private fun getUniversitiesByKeyword(keyword: String) {
+        viewModelScope.launch {
+            repository.getUniversitiesByKeyword(keyword)
                 .flowOn(defaultDispatcher)
                 .catch {
                     _universities.value = DataResult.Error(it.message ?: "Something went wrong")

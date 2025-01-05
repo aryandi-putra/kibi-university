@@ -39,6 +39,8 @@ class UniversityRepositoryImpl @Inject constructor(
     override fun getUniversitiesByKeyword(keyword: String):
             Flow<DataResult<List<University>>> = flow {
         val dbUniversities = universitiesDao.getDBUniversitiesByKey(keyword)
-
+        emit(DataResult.Success(dbUniversities.map {
+            DBToModelMapper.map(it)
+        }))
     }
 }

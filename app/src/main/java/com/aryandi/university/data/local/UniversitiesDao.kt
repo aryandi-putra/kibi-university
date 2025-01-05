@@ -10,7 +10,7 @@ interface UniversitiesDao {
     @Query("SELECT * FROM university")
     suspend fun getDBUniversities(): List<DBUniversity>
 
-    @Query("SELECT * FROM university WHERE name = :key")
+    @Query("SELECT * FROM university WHERE name LIKE '%' || :key || '%'")
     suspend fun getDBUniversitiesByKey(key:String): List<DBUniversity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
