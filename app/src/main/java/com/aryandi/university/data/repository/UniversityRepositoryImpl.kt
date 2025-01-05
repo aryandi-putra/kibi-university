@@ -1,16 +1,14 @@
 package com.aryandi.university.data.repository
 
-import com.aryandi.university.data.local.DBUniversity
 import com.aryandi.university.data.local.UniversitiesDao
-import com.aryandi.university.domain.model.DataResult
 import com.aryandi.university.data.remote.ApiService
 import com.aryandi.university.domain.mapper.ApiToDBMapper
 import com.aryandi.university.domain.mapper.ApiToModelMapper
 import com.aryandi.university.domain.mapper.DBToModelMapper
+import com.aryandi.university.domain.model.DataResult
 import com.aryandi.university.domain.model.University
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UniversityRepositoryImpl @Inject constructor(

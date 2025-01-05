@@ -2,9 +2,6 @@ package com.aryandi.university.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aryandi.university.data.remote.ApiResult
-import com.aryandi.university.data.remote.ApiUniversity
-import com.aryandi.university.data.remote.ApiService
 import com.aryandi.university.data.repository.UniversityRepository
 import com.aryandi.university.domain.model.DataResult
 import com.aryandi.university.domain.model.University
