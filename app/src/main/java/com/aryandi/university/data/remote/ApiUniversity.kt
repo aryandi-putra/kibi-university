@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NetworkUniversity(
+data class ApiUniversity(
     @SerializedName("name")
     var name: String,
     @SerializedName("country")

@@ -33,8 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.aryandi.university.data.model.ApiResult
-import com.aryandi.university.data.remote.NetworkUniversity
+import com.aryandi.university.data.remote.ApiResult
+import com.aryandi.university.data.remote.ApiUniversity
+import com.aryandi.university.domain.model.DataResult
+import com.aryandi.university.domain.model.University
 import com.aryandi.university.feature.detail.UniversityWebActivity
 import com.aryandi.university.ui.theme.UniversityTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,31 +61,31 @@ class MainActivity : ComponentActivity() {
                             .padding(start = 4.dp, end = 4.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        val apiResult by viewModel.universities.collectAsState()
-                        when (apiResult) {
-                            is ApiResult.Loading -> {
+                        val dataResult by viewModel.universities.collectAsState()
+                        when (dataResult) {
+                            is DataResult.Loading -> {
                                 CircularProgressIndicator(
                                     modifier = Modifier.size(50.dp),
                                     color = Color.Blue
                                 )
                             }
 
-                            is ApiResult.Error -> {
+                            is DataResult.Error -> {
                                 Toast.makeText(
                                     this@MainActivity,
-                                    apiResult.error,
+                                    dataResult.error,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
 
-                            is ApiResult.Success -> {
-                                val universities = apiResult.data ?: emptyList()
+                            is DataResult.Success -> {
+                                val universities = dataResult.data ?: emptyList()
                                 LazyColumn(
                                     modifier = Modifier.fillMaxSize(),
                                     verticalArrangement = Arrangement.spacedBy(10.dp)
                                 ) {
-                                    items(items = universities) { quote ->
-                                        UniversityItem(university = quote)
+                                    items(items = universities) {
+                                        UniversityItem(university = it)
                                     }
                                 }
                             }
@@ -110,21 +112,21 @@ fun CustomAppBar() {
 }
 
 @Composable
-fun UniversityItem(university: NetworkUniversity) {
+fun UniversityItem(university: University) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
                 context.startActivity(Intent(context, UniversityWebActivity::class.java).apply {
-                    putExtra("webPage", university.webPages[0])
+                    putExtra("webPage", university.webPage)
                 })
             },
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(text = university.name)
         Text(text = university.country)
-        Text(text = university.webPages[0])
+        Text(text = university.webPage)
         HorizontalDivider(modifier = Modifier.fillMaxWidth())
     }
 }
