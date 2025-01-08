@@ -59,7 +59,6 @@ class MainViewModelTest {
 
     @Test
     fun `Get universities should show error`(): Unit = runTest {
-
         coEvery { repository.getUniversities() }.coAnswers {
             flow {
                 emit(DataResult.Loading())

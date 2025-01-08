@@ -62,6 +62,27 @@ class RepositoryTest {
         }
 
     @Test
+    fun `Get universities with failed to fetch network should return error`(): Unit =
+        runTest {
+            coEvery { universitiesDao.getDBUniversities() }.coAnswers {
+                listOf()
+            }
+
+            coEvery { apiService.getUniversities() }.coAnswers {
+                ApiResult.Error("Something went wrong")
+            }
+
+            repository = UniversityRepositoryImpl(universitiesDao, apiService)
+            val result = repository.getUniversities()
+
+            result.test {
+                assertTrue(awaitItem() is DataResult.Loading)
+                assertTrue(awaitItem() is DataResult.Error)
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
     fun `Get universities When there are data exist on room should return cached data and don't fetch network`(): Unit =
         runTest {
             val dummyDBdata = listOf(
