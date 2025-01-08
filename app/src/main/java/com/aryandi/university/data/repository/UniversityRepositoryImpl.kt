@@ -1,6 +1,7 @@
 package com.aryandi.university.data.repository
 
 import com.aryandi.university.data.local.UniversitiesDao
+import com.aryandi.university.data.remote.ApiResult
 import com.aryandi.university.data.remote.ApiService
 import com.aryandi.university.domain.mapper.ApiToDBMapper
 import com.aryandi.university.domain.mapper.ApiToModelMapper
@@ -19,14 +20,21 @@ class UniversityRepositoryImpl @Inject constructor(
         emit(DataResult.Loading())
         val dbUniversities = universitiesDao.getDBUniversities()
         if (dbUniversities.isEmpty()) {
-            val apiUniversities = apiService.getUniversities().data
-            apiUniversities?.apply {
-                universitiesDao.insertDBUniversities(this.map {
-                    ApiToDBMapper.map(it)
-                })
-                emit(DataResult.Success(this.map {
-                    ApiToModelMapper.map(it)
-                }))
+            when (val universities = apiService.getUniversities()) {
+                is ApiResult.Error -> {
+                    emit(DataResult.Error(universities.error ?: "Something went wrong"))
+                }
+                is ApiResult.Success -> {
+                    val apiUniversities = universities.data
+                    apiUniversities?.apply {
+                        universitiesDao.insertDBUniversities(this.map {
+                            ApiToDBMapper.map(it)
+                        })
+                        emit(DataResult.Success(this.map {
+                            ApiToModelMapper.map(it)
+                        }))
+                    }
+                }
             }
         } else {
             emit(DataResult.Success(dbUniversities.map {
