@@ -2,11 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
     namespace = "com.aryandi.university"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.aryandi.university"
@@ -56,4 +59,33 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    // dagger
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    // ktor
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.android)
+    implementation(libs.ktor.content.negotiation)
+    implementation(libs.ktor.okhttp)
+    implementation(libs.ktor.gson)
+    implementation(libs.ktor.logging)
+    //chucker
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
+    // room
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
+    // coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    // viewmodel compose
+    implementation(libs.viewmodel.compose)
+    // mockk
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
+    // coroutine test
+    testImplementation(libs.coroutine.test)
+    // turbine
+    testImplementation(libs.turbine)
 }
